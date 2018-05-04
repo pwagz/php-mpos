@@ -22,6 +22,8 @@ class CSRFToken Extends Base {
    * @return array 1 minute ago up to 15 minute ago hashes
    */
   
+  /*
+  Old csrf token checker ~1min?
   public function checkAdditional($user, $type) {
     $date = date('m/d/y/H/i');
     $d = explode('/', $date);
@@ -33,6 +35,18 @@ class CSRFToken Extends Base {
     }
     return $hashes;
   }
+  */
+  public function checkAdditional($user, $type) {
+    $date = date('m/d/y/H/i');
+    $d = explode('/', $date);
+    // Allow 4-5 minutes
+    $hashes = array();
+    for ($x = 1; $x < 5; $x++){
+        for ($y = 4;$d[$y]-- == 0;$y--);
+        $hashes[$x-1] = $this->getHash($this->buildSeed($user.$type, $d[0], $d[1], $d[2], $d[3], $d[4]));
+    }
+    return $hashes;
+}
   
   /**
    * Builds a seed with the given data
