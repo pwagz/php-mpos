@@ -22,11 +22,24 @@
                   </li>
                 </ul>
                 {else}
-                <a class="navbar-brand" href="{$smarty.server.SCRIPT_NAME}">{$GLOBAL.website.name}</a>
+                <!--<a class="navbar-brand" href="{$smarty.server.SCRIPT_NAME}">{$GLOBAL.website.name}</a>-->
+                <a class="navbar-brand" href="{$smarty.server.SCRIPT_NAME}">Home</a>
+				<a class="navbar-brand" href="http://grlc.life">GRLC.Life</a>
+				<a class="navbar-brand" href="http://garlicinsight.com">GarlicInsight</a>
                 {/if}
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
+			
+			<!--<li class="well well-sm" style="padding:5px; margin:0;">
+				<b id="grlcPrice">$420.69</b> <small>USD</small>
+			 </li>-->
+			
+			 <li class="well well-sm" style="padding:5px; margin:0;">
+				<b id="navWorkers">{$GLOBAL.workers}</b> <small>workers</small> | <b id="navHash">{$GLOBAL.hashrate|round:1}</b> <small>{$GLOBAL.hashunits.pool}</small>
+			 </li>
+			 
+			 
 				{if $smarty.session.AUTHENTICATED|default:"0" == 1 && $GLOBAL.userdata.lastnotifications|@count|default:"0" != 0}
                 <!-- /.dropdown -->
                 <li class="dropdown">
@@ -83,3 +96,56 @@
                 </li>
             </ul>
         </nav>
+		
+		<script type="text/javascript" src="{$PATH}/../global/js/number_format.js"></script>
+
+<script>
+
+  // Ajax API URL
+  var url_api = "{$smarty.server.SCRIPT_NAME}?page=api&action=getpoolstatus&api_key={$GLOBAL.userdata.api_key}";
+  var price_api = "https://api.coinmarketcap.com/v2/ticker/2475/";
+  
+  {literal}
+  function refreshStaticData(data) {
+	$('#navWorkers').html(number_format(data.getpoolstatus.data.workers));
+    $('#navHash').html((number_format(data.getpoolstatus.data.hashrate/1000, 1)));
+  }
+  
+    function refreshPrice(data) {
+	$('#grlcPrice').html(number_format(data.data.quotes.USD.price), 3);
+  }
+  
+  (function navStats() {
+    $.ajax({
+      url: url_api,
+      dataType: 'json',
+      cache : false,
+      contentType : 'application/json; charset=utf-8',
+      type : 'GET',
+      success: function(data) {
+        refreshStaticData(data);
+      },
+      complete: function() {
+        setTimeout(navStats, {/literal}{($GLOBAL.config.statistics_ajax_long_refresh_interval * 1000)|default:"10000"}{literal})
+      }
+    });
+  })();
+  /*
+    (function navPrice() {
+    $.ajax({
+      url: price_api,
+      dataType: 'json',
+      cache : false,
+      contentType : 'application/json; charset=utf-8',
+      type : 'GET',
+      success: function(data) {
+        refreshPrice(data);
+      },
+      complete: function() {
+        setTimeout(navPrice, {/literal}{($GLOBAL.config.statistics_ajax_long_refresh_interval * 1000)|default:"10000"}{literal})
+      }
+    });
+  })();*/
+  
+		{/literal}
+		</script>

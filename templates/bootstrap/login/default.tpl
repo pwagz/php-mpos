@@ -17,14 +17,7 @@
           </div>
         </div>
       </div>
-      <center>
-        {nocache}
-          {if $recaptcha_enabled}
-            <div class="g-recaptcha" data-sitekey="{$recaptcha_public_key}"></div>
-            <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
-          {/if}
-        {/nocache}
-      </center>
+      <center>{nocache}{$RECAPTCHA|default:"" nofilter}{/nocache}</center>
       <div class="panel-footer">
         <input type="submit" class="btn btn-success btn-sm" value="Login" >
         <a href="{$smarty.server.SCRIPT_NAME}?page=password"><font size="1">Forgot your password?</font></a>

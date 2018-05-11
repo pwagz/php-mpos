@@ -23,10 +23,11 @@
   <link href="{$PATH}/css/mpos.css" rel="stylesheet">
   <link href="{$PATH}/css/plugins/metisMenu/metisMenu.css" rel="stylesheet">
   <link href="{$PATH}/css/sparklines.css" rel="stylesheet">
+  <link href="{$PATH}/css/design/dark.css" rel="stylesheet">  
   {if $GLOBAL.config.website_design|default:"default" != "default"}
   <link href="{$PATH}/css/design/{$GLOBAL.config.website_design}.css" rel="stylesheet">
   {/if}
-  
+   
   <script src="{$PATH}/js/jquery.min.js"></script>
   <script src="{$PATH}/js/jquery.cookie.js"></script>
   <script src="{$PATH}/js/jquery.md5.js"></script>

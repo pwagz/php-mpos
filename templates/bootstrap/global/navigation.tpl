@@ -4,6 +4,9 @@
                     <li>
                         <a href="{$smarty.server.SCRIPT_NAME}"><i class="fa fa-home fa-fw"></i> Home</a>
                     </li>
+					
+
+					
                     {if $smarty.session.AUTHENTICATED|default:"0" == 1}
                     <li>
                         <a href="{$smarty.server.SCRIPT_NAME}?page=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
@@ -91,6 +94,11 @@
                         <!-- /.nav-second-level -->
                     </li>
                     {/if}
+					
+					
+										<li {if $smarty.get.page|default:"0" eq "discord"}class="active"{/if}><a href="{$smarty.server.SCRIPT_NAME}?page=discord"><i class="fa fa-bullhorn fa-fw"></i> Discord</a></li>
+					<li {if $smarty.get.page|default:"0" eq "faucet"}class="active"{/if}><a href="{$smarty.server.SCRIPT_NAME}?page=faucet"><i class="fa fa-tint fa-fw"></i> Faucet</a></li>
+					
                     <li {if $smarty.get.page|default:"0" eq "register" || $smarty.get.page|default:"0" eq "login" || $smarty.get.page|default:"0" eq "logout" || $smarty.get.page|default:"0" eq "tac" || $smarty.get.page|default:"0" eq "contactform"}class="active"{/if}>
                         <a href="#"><i class="fa fa-tasks fa-fw"></i> Other<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -105,6 +113,9 @@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
+					
+					
+					
                 </ul>
                 <!-- /#side-menu -->
             </div>
